@@ -160,39 +160,21 @@ class tableau1 extends Phaser.Scene{
      * Définit ce qui se passe quand on appuie ou relache une touche du clavier
      * ALGO : ceci est une fonction ou méthode
      */
+
     initKeyboard(){
-        let me=this;
-        this.input.keyboard.on('keydown', function(kevent)
-        {
-            switch (kevent.keyCode)
-            {
-                case Phaser.Input.Keyboard.KeyCodes.RIGHT:
-                    me.speed=1;
-                    break;
-                case Phaser.Input.Keyboard.KeyCodes.LEFT:
-                    me.speed=-1;
-                    break;
-            }
+        let me=this
+        this.input.keyboard.on('keydown', function (kevent) {
+                switch (kevent.keyCode) {
+                }
         });
-        this.input.keyboard.on('keyup', function(kevent)
-        {
-            switch (kevent.keyCode)
-            {
-                case Phaser.Input.Keyboard.KeyCodes.RIGHT:
-                case Phaser.Input.Keyboard.KeyCodes.LEFT:
-                    me.speed=0;
+        this.input.keyboard.on('keyup', function (kevent) {
+            switch (kevent.keyCode) {
+                case Phaser.Input.Keyboard.KeyCodes.A:
+                    me.nuageaka.visible = true
+                    me.sound.play('foudre')
+                    me.nuageaka.play('lazerss')
                     break;
             }
         });
     }
-
-    /**
-     * Cette fonction s'exécute en boucle (à peu près 60 fois par secondes)
-     */
-    update(){
-        //déplacement de la caméra
-
-    }
-
-
-}
+ }
