@@ -171,8 +171,8 @@ class tableau1 extends Phaser.Scene{
             switch (kevent.keyCode) {
                 case Phaser.Input.Keyboard.KeyCodes.A:
                     me.nuageaka.visible = true
-                    me.sound.play('foudre')
-                    me.nuageaka.play('lazerss')
+                    */me.sound.play('foudre')
+                    me.nuage.play('nuageaka')
                     break;
             }
         });
