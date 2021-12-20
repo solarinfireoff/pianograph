@@ -17,7 +17,19 @@ class Tableau1 extends Phaser.Scene{
         //ground (premier plan noir)
         this.load.image('villanaru','assets/pianog/fond/naruvilla.jpg')
         this.load.image('naruto1', 'assets/pianog/charac/naruto.png')
-        this.load.image('nuageaka','assets/pianog/autre/nuage.png')
+        //this.load.image('nuageaka','assets/pianog/autre/nuage.png')
+        this.load.image('sasuke1','assets/pianog/charac/sasuke2.png')
+
+
+
+        for(let i=1;i<=3;i++) {
+            this.load.image('filterRain' + i, 'assets/level/weather/rain/frame' + i + '.png');
+        }
+        for(let i=1;i<=5;i++) {
+            this.load.image('snow' + i, 'assets/level/weather/snow/frame' + i + '.png');
+        }
+
+
 
 
 
@@ -34,7 +46,13 @@ class Tableau1 extends Phaser.Scene{
         this.load.image('bg-animation-a', 'assets/level/background-2/bg-animation/bg-animation-a.png');
 
     }
-
+    getFrames(prefix,length) {
+        let frames = [];
+        for (let i = 1; i <= length; i++) {
+            frames.push({key: prefix + i});
+        }
+        return frames;
+    }
     /**
      * Crée la scène
      * TODO élèves : reproduire à l'identique assets/level/00-preview-example/sample1.jpg
@@ -56,7 +74,7 @@ class Tableau1 extends Phaser.Scene{
          * @type {Phaser.GameObjects.Container}
          * @see https://photonstorm.github.io/phaser3-docs/Phaser.GameObjects.Container.html
          */
-        this.bg2Container=this.add.container(0,0);
+        //this.bg2Container=this.add.container(0,0);
         /**
          * Terrain dans bg2
          * @type {Phaser.GameObjects.Image}
@@ -74,7 +92,7 @@ class Tableau1 extends Phaser.Scene{
          * contient tous les éléments du background 1 (gris)
          * @type {Phaser.GameObjects.Container}
          */
-        this.bg1Container=this.add.container(0,0);
+        //this.bg1Container=this.add.container(0,0);
         /**
          * Terrain
          * @type {Phaser.GameObjects.Image}
@@ -88,7 +106,7 @@ class Tableau1 extends Phaser.Scene{
          * contient tous les éléments du premier plan (noir)
          * @type {Phaser.GameObjects.Container}
          */
-        this.groundContainer=this.add.container(0,0);
+        //this.groundContainer=this.add.container(0,0);
         /**
          * Arbre
          * @type {Phaser.GameObjects.Image}
@@ -112,6 +130,27 @@ class Tableau1 extends Phaser.Scene{
 
         this.nuage=this.add.image(0,0, 'nuageaka').setOrigin(0,0)
         this.nuage.setScale
+
+        this.saskue=this.add.image(0,0 ,'sasuke1').setOrigin(0,0)
+
+
+
+
+
+        this.filterRain = this.add.sprite(0, 0, 'filterRain1').setOrigin(0, 0);
+        //animation de 5 images
+        this.anims.create({
+            key: 'rain',
+            frames: this.getFrames('filterRain',3),
+            frameRate: 16,
+            repeat: -1
+        });
+        this.filterRain.play('rain');
+        this.filterRain.visible=false;
+        this.initKeyboard();
+
+
+
 
 
 
@@ -163,15 +202,17 @@ class Tableau1 extends Phaser.Scene{
 
     initKeyboard(){
         let me=this
-        this.input.keyboard.on('keydown', function (kevent) {
-            switch (kevent.keyCode) {
-            }
-        });
         this.input.keyboard.on('keyup', function (kevent) {
             switch (kevent.keyCode) {
                 case Phaser.Input.Keyboard.KeyCodes.A:
-
+                    me.rain.visible=false;
+                    me.rain.play('');
                     break;
+            }
+        });
+        this.input.keyboard.on('keydown', function (kevent) {
+            switch (kevent.keyCode) {
+
             }
         });
     }
