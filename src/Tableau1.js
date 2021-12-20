@@ -2,7 +2,7 @@
  * ALGO: ceci est une classe...
  * Vous verrez ça plus tard en détail avec Rémi, pour l'instant on n'a pas trop besoin de savoir à quoi ça sert.
  */
-class tableau1 extends Phaser.Scene{
+class Tableau1 extends Phaser.Scene{
     /**
      * Précharge les assets
      */
@@ -98,7 +98,7 @@ class tableau1 extends Phaser.Scene{
          * Terrain 1
          * @type {Phaser.GameObjects.Image}
          */
-            //ici on va calculer les positions
+        //ici on va calculer les positions
 
 
 
@@ -164,16 +164,15 @@ class tableau1 extends Phaser.Scene{
     initKeyboard(){
         let me=this
         this.input.keyboard.on('keydown', function (kevent) {
-                switch (kevent.keyCode) {
-                }
+            switch (kevent.keyCode) {
+            }
         });
         this.input.keyboard.on('keyup', function (kevent) {
             switch (kevent.keyCode) {
                 case Phaser.Input.Keyboard.KeyCodes.A:
-                    me.cloud.visible = true
-                    me.cloud.play('nuageaka')
+
                     break;
             }
         });
     }
- }
+}
