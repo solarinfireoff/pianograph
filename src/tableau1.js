@@ -171,7 +171,6 @@ class tableau1 extends Phaser.Scene{
             switch (kevent.keyCode) {
                 case Phaser.Input.Keyboard.KeyCodes.A:
                     me.cloud.visible = true
-                    */me.sound.play('foudre')
                     me.cloud.play('nuageaka')
                     break;
             }
