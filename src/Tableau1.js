@@ -16,34 +16,20 @@ class Tableau1 extends Phaser.Scene{
 
         //ground (premier plan noir)
         this.load.image('villanaru','assets/pianog/fond/naruvilla.jpg')
+        this.load.image('destville','assets/pianog/fond/desko.jpg')
         this.load.image('naruto1', 'assets/pianog/charac/naruto.png')
-        //this.load.image('nuageaka','assets/pianog/autre/nuage.png')
+        this.load.image('nuaka','assets/pianog/autre/aka1.png')
+
         this.load.image('sasuke1','assets/pianog/charac/sasuke2.png')
 
 
 
+        for(let i = 1; i <= 3; i++) {
+            this.load.image('rain' + i, 'assets/level/weather/rain/frame' + i + '.png');
+        }
         for(let i=1;i<=3;i++) {
-            this.load.image('filterRain' + i, 'assets/level/weather/rain/frame' + i + '.png');
+            this.load.image('snow'+i, 'assets/level/weather/snow/fram'+i+'.png');
         }
-        for(let i=1;i<=5;i++) {
-            this.load.image('snow' + i, 'assets/level/weather/snow/frame' + i + '.png');
-        }
-
-
-
-
-
-
-        //au lieu d'écrire 5 lignes quasi identiques, on charge l'herbe avec une boucle
-        // ALGO : ceci est une boucle
-
-
-
-        //filtre film TODO élève : faire une boucle à la place des 3 lignes qui suivent
-
-
-        //texture au fond  TODO élève : faire une boucle pour charger les 3 images et démontrer par la même que vous savez aller au plus simple
-        this.load.image('bg-animation-a', 'assets/level/background-2/bg-animation/bg-animation-a.png');
 
     }
     getFrames(prefix,length) {
@@ -58,13 +44,12 @@ class Tableau1 extends Phaser.Scene{
      * TODO élèves : reproduire à l'identique assets/level/00-preview-example/sample1.jpg
      * TODO élèves : plus tard, continuez le décor vers la droite en vous servant des assets mis à votre disposition
      */
-    create(){
+    create() {
 
         /**
          * Fond très clair avec une trame
          * @type {Phaser.GameObjects.Sprite}
          */
-
 
 
         //--------------background 2 (tout au fond et flou)--------------------
@@ -92,7 +77,7 @@ class Tableau1 extends Phaser.Scene{
          * contient tous les éléments du background 1 (gris)
          * @type {Phaser.GameObjects.Container}
          */
-        //this.bg1Container=this.add.container(0,0);
+        this.bg1Container = this.add.container(0, 0);
         /**
          * Terrain
          * @type {Phaser.GameObjects.Image}
@@ -100,13 +85,16 @@ class Tableau1 extends Phaser.Scene{
 
 
         //-------------ground (premier plan noir)---------------------------
-        this.villanaru=this.add.image(0,0, 'villanaru').setOrigin(0,0)
-        this.villanaru.scale=0.5
+        this.villanaru = this.add.image(0, 0, 'villanaru').setOrigin(0, 0)
+        this.villanaru.scale = 0.5
+        this.desko = this.add.image(0,0,'destville').setOrigin(0,0)
+        this.desko.scale = 1.2
+        this.desko.setVisible(false)
         /**
          * contient tous les éléments du premier plan (noir)
          * @type {Phaser.GameObjects.Container}
          */
-        //this.groundContainer=this.add.container(0,0);
+        this.groundContainer = this.add.container(0, 0);
         /**
          * Arbre
          * @type {Phaser.GameObjects.Image}
@@ -119,35 +107,55 @@ class Tableau1 extends Phaser.Scene{
         //ici on va calculer les positions
 
 
+        this.naruto = this.add.image(0, 0, 'naruto1').setOrigin(-15, -1)
+        this.naruto.scale = 0.1
+        this.naruto.setVisible(false)
+
+
+        this.aka1= this.add.image(0, 0, 'nuaka').setOrigin(0, 0)
+        this.aka1.setScale= 1
+
+        this.saskue = this.add.image(0, 0, 'sasuke1').setOrigin(- -1)
+        this.saskue.scale = 0.2
 
 
 
 
-
-        this.naruto=this.add.image(0,0, 'naruto1').setOrigin(-15,-1)
-        this.naruto.scale=0.1
-
-
-        this.nuage=this.add.image(0,0, 'nuageaka').setOrigin(0,0)
-        this.nuage.setScale
-
-        this.saskue=this.add.image(0,0 ,'sasuke1').setOrigin(0,0)
-
-
-
-
-
-        this.filterRain = this.add.sprite(0, 0, 'filterRain1').setOrigin(0, 0);
-        //animation de 5 images
+        //animation de pluie
+        this.rain = this.add.sprite(0, 0, 'rain').setOrigin(0, 0);
         this.anims.create({
             key: 'rain',
-            frames: this.getFrames('filterRain',3),
+            frames: this.getFrames("rain", 3),
             frameRate: 16,
             repeat: -1
         });
-        this.filterRain.play('rain');
-        this.filterRain.visible=false;
+        this.rain.play('rain')
+        this.rain.setVisible(false)
+
+        this.snow = this.add.sprite(0, 0, 'snow ').setOrigin(0,0);
+        this.anims.create({
+            key: 'snow',
+            frames: this.getFrames('snow',3),
+            frameRate: 16,
+            repeat: -1
+
+        });
+        this.snow.play('snow')
+        this.snow.visible=false;
+
+
+
+
+
+
+
+
         this.initKeyboard();
+
+
+
+
+
 
 
 
@@ -205,9 +213,36 @@ class Tableau1 extends Phaser.Scene{
         this.input.keyboard.on('keyup', function (kevent) {
             switch (kevent.keyCode) {
                 case Phaser.Input.Keyboard.KeyCodes.A:
-                    me.rain.visible=false;
-                    me.rain.play('');
+                    if (me.rain.visible === true) {
+                        me.rain.setVisible(false)
+                    }
+                    else {
+                        me.rain.setVisible(true)
+                    }
                     break;
+                case Phaser.Input.Keyboard.KeyCodes.Z:
+                    if(me.snow.visible === true) {
+                       me.snow.setVisible(false)
+                    }
+                    else {
+                       me.snow.setVisible(true)
+                    }
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.E:
+                    if(me.naruto.visible ===true) {
+                       me.naruto.setVisible(false)
+                    }
+                    else {
+                       me.naruto.setVisible(true)
+                        }
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.R:
+                    if(me.desko.visible ===true) {
+                       me.desko.setVisible(false)
+                    }
+                    else{
+                        me.desko.setVisible(true)
+                    }
             }
         });
         this.input.keyboard.on('keydown', function (kevent) {
